@@ -7,22 +7,25 @@ class Actor {
     this.height = 27;
     this.score = 0;
     this.speed = speed;
-    this.sprite = animation;
+    this.sprite = sprite.frame;
     this.animIndex = 3;
     this.animBuffer = 0;
     this.isdown = false;
   }
 
+  // resets the actor position and the animation count
   reset() {
     this.y = height - 10;
     this.animBuffer = 0;
   }
 
+  // draws the actor on screen
   show() {
     image(this.sprite[this.animIndex], this.x, this.y, this.width, this.height);
     // rect(this.x, this.y, this.width, this.height);
   }
 
+  // changes the animation frame
   animate(direction) {
     this.animBuffer++;
 
@@ -52,6 +55,7 @@ class Actor {
     }
   }
 
+  // controls the actor and sets the direction of the animation
   move() {
     if (keyIsDown(UP_ARROW)) {
       this.y -= this.speed;
@@ -63,6 +67,7 @@ class Actor {
     }
   }
 
+  // does the colision work on the actor
   update(car_array) {
     for (let i = 0; i < car_array.length; i++) {
       this.hit = collideRectRect(
@@ -78,13 +83,13 @@ class Actor {
       if (this.hit) {
         this.reset();
         if (this.score > 0) this.score--;
-        sfx_splort.play();
+        sfx.splort.play();
       }
     }
-    if (this.y < 0) {
+    if (this.y < -20) {
       this.reset();
       this.score++;
-      sfx_happy.play();
+      sfx.point.play();
     }
   }
 }
